@@ -1,34 +1,18 @@
-.TH C-SIMPLE SHELL 1 man_3_printf\-0.1
+.TH C-SIMPLE SHELL 1 simple_shell\-0.1
 .SH NAME
-C-SIMPLE SHELL - It prints formatted output.
+C-SIMPLE SHELL - A simple shell program
 .SH LIBRARY
 Standard C library
 .SH SYNOPSIS
-.B C-SIMPLE SHELL
-.BR #include 
-.RB < \-main.h
-.R >
+C-SIMPLE SHELL
+#include <"shell.h">
 .P
-.BR int _printf(const char *format, ...);
+int display_prompt(void);
 .SH DESCRIPTION
-.B C-SIMPLE SHELL
-is a program that prints formatted output for C-PRINTF project
+C-SIMPLE SHELL
+- is a basic command-line interpreter that allows users to interact with the operating system by entering commands
 .SH RETURN VALUE
-The
-.B C-SIMPLE SHELL
-.I function
-.R returns the number of characters printed (excluding the null)
-.SH EXAMPLE
-.I int
-main() {
-.P
-n = 10;
-.P
-_printf("The value of n is: %d\n", n);
-.P
-return (0);
-.P
-}
+It executes the corresponding program or operation that you give the command line in your operator
 .SH AUTHOR(S)
 This code was mostly written in collaboration by
 .I Xavier J. Cruz Santiago
@@ -36,10 +20,10 @@ This code was mostly written in collaboration by
 .I Angel Velazquez
 .R for a project called C-SIMPLE SHELL
 .SH Bugs
-If encountering any issues, I recommend making your own program instead.Do some research. Do some more research. Maybe ask some peers. Or call Xavier.
+If encountering any issues, I recommend making your own program instead. Do some research. Do some more research. Maybe ask some peers. Or call Xavier.
 .SH COPYRIGHT
 Copyright \(co 2024 [
 .I HOLBERTON C SCHOOL
 .R ]
 .SH NOTES
-.B  This man page was completed for proper documentation of a function.
+.B  This man page was completed for proper documentation of a function. It was created as part of a project for Holberton School. It is not intended for practical use.
