@@ -7,9 +7,9 @@
  *
  * Description: This function forks the current process to create a new child
  * process. The child process then attempts to execute the command specified
- * in args[0] with execvp. If execvp fails, an error is printed and the child
- * process exits. The parent process waits for the child to terminate before
- * continuing.
+ * in args[0] with execvp. If execvp fails, a specific error message is printed
+ * and the child process exits.
+ * The parent process waits for the child to terminate.
  *
  * Return: Returns 1 if the fork fails, otherwise returns 0 to indicate
  *         successful execution or the termination of the command.
@@ -25,7 +25,8 @@ int execute_command(char **args)
 		/* Try to execute the command */
 		if (execvp(args[0], args) == -1)
 		{
-			perror("execvp"); /* Print an error message if execvp fails */
+			/* Change: Specific error */
+			fprintf(stderr, "%s: Command not found\n", args[0]);
 			exit(EXIT_FAILURE); /* Exit child process with failure status */
 		}
 	}
@@ -38,9 +39,7 @@ int execute_command(char **args)
 	{
 		/* Wait for the child process to terminate */
 		do {
-			/* Wait for changes in child process state */
 			waitpid(pid, &status, WUNTRACED);
-		/* Continue if child hasn't exited normally or by a signal */
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 
