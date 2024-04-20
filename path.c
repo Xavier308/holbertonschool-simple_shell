@@ -51,21 +51,34 @@ char *find_in_path(char *cmd)
 	}
 
 	path_copy = strdup(path);
-	dir = strtok(path_copy, ":");
+	if (path_copy == NULL)
+	{
+		return (NULL); /* strdup failed */
+	}
 
+	dir = strtok(path_copy, ":");
 	while (dir != NULL)
 	{
 		char *full_path = malloc(strlen(dir) + strlen(cmd) + 2);
+
+		if (full_path == NULL)
+		{
+			free(path_copy);
+			return (NULL); /* malloc failed */
+		}
 
 		sprintf(full_path, "%s/%s", dir, cmd);
 		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
 		{
 			free(path_copy);
-			return (full_path);
+			return (full_path); /* Command found and is executable */
 		}
+
 		free(full_path);
 		dir = strtok(NULL, ":");
 	}
+
 	free(path_copy);
-	return (NULL);
+	return (NULL); /* Command not found in any PATH directory */
 }
+
