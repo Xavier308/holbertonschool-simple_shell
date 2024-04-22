@@ -68,7 +68,7 @@ int process_command(const char *program_name, char **cmd_buffer,
 
     if (line_size == -1)
     {
-      /*  return (0); */
+      /* return (0); */
 	 clean_exit(*cmd_buffer, feof(stdin) ? 0 : 1); /* (block if cause problem) */
     }
 

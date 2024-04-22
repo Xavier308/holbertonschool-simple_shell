@@ -36,22 +36,22 @@ int execute_external(char **args, const char *program_name)
 {
     pid_t pid;
     int status;
-    char *cmd_path;
+   char *cmd_path;
 
-    cmd_path = args[0][0] != '/' ? find_in_path(args[0]) : strdup(args[0]);
+  /*  cmd_path = args[0][0] != '/' ? find_in_path(args[0]) : strdup(args[0]);
 
     if (cmd_path == NULL)
     {	
-	/* removed 'command' y se puso un 1 */ 
+	// removed 'command' and added 1 / 
         fprintf(stderr, "%s: 1: %s: not found\n", program_name, args[0]);	
-        return (1); /* Command not found */
+        return (1); // Command not found /
     }
 
     pid = fork();
     if (pid == 0)
     {
-        /* Child process */
-	/* printf("Executing command: %s\n", cmd_path);  ---for depuration--- */
+        / Child process /
+	/ printf("Executing command: %s\n", cmd_path);  ---for depuration--- /
         execvp(cmd_path, args);
         fprintf(stderr, "%s: failed to execute - %s\n", cmd_path, strerror(errno));
         exit(EXIT_FAILURE);
@@ -64,17 +64,53 @@ int execute_external(char **args, const char *program_name)
     }
     else
     {
-        /* Parent process, wait for the child to terminate */
+        / Parent process, wait for the child to terminate /
         waitpid(pid, &status, 0);
         if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
 	{
             fprintf(stderr, "Command exited with status %d\n", WEXITSTATUS(status));
 	    free(cmd_path);
-	    return  (2); /* changed from 2 to 3 */
+	    return  (2); / changed from 2 to 3 /
         }
     }
 
     free(cmd_path);
     return (0);
-}
+} */
 
+   cmd_path = args[0][0] != '/' ? find_in_path(args[0]) : strdup(args[0]);
+
+    if (cmd_path == NULL) {
+        fprintf(stderr, "%s: 1: %s: not found\n", program_name, args[0]);
+        return 1; /* Command not found */
+    }
+
+    pid = fork();
+    if (pid == 0)
+	{ 
+	/* Child process */
+        execvp(cmd_path, args);
+        fprintf(stderr, "%s: failed to execute - %s\n", cmd_path, strerror(errno));
+        free(cmd_path);
+        exit(EXIT_FAILURE); /* Make sure to exit the child process */
+    	}
+	else if (pid < 0)
+	{
+        perror("fork failed");
+        free(cmd_path);
+        return (2); /* Fork failed */
+
+    	}
+	else
+	{ /* Parent process */
+        waitpid(pid, &status, 0);
+        free(cmd_path);
+
+        if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+	{
+            fprintf(stderr, "Command exited with status %d\n", WEXITSTATUS(status));
+            return (2); /* Command execution failed */
+        }
+    }
+    return (0); /*  Command executed successfully */
+}
