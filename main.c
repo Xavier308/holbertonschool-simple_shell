@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * main - Entry point of the shell program.
  *
@@ -15,6 +14,10 @@ int main(void)
 	ssize_t line_size;
 	char **args;
 
+	char *path_value = get_env_var("PATH");
+	if (path_value == NULL)
+	{ /* handle empty paths */
+	}
 	/* Infinite loop to keep the shell running */
 	while (1)
 	{
@@ -38,4 +41,3 @@ int main(void)
 	free(cmd_buffer); /* Free the buffer allocated for command input */
 	return (0); /* Return zero to indicate successful execution */
 }
-

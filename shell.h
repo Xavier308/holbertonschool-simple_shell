@@ -43,5 +43,8 @@ int execute_external(char **args);
 /* Error handling function */
 void handle_error(const char *error_message, int error_code);
 
+char *get_env_var(const char *name);
+
+
 #endif
 
