@@ -11,21 +11,29 @@
  */
 int handle_builtins(char **args)
 {
-	if (strcmp(args[0], "cd") == 0)
-	{
-		/* Use HOME if no argument is given  */
-		char *dir = args[1] ? args[1] : getenv("HOME");
+    if (strcmp(args[0], "cd") == 0)
+    {
 
-		if (dir == NULL || chdir(dir) != 0)
-		{
-			perror("cd failed");  /* Print why the cd failed */
-		}
-		return (0);  /* Command handled */
-	}
-	else if (strcmp(args[0], "exit") == 0)
-	{
-		exit(0); /* Exit the shell cleanly */
-	}
-	return (1); /* Indicate no built-in command was handled */
+        return (0);
+    }
+    else if (strcmp(args[0], "exit") == 0)
+    {
+	exit(0); /* Exit the shell when 'exit' is typed */
+        /* return (0);   // comentado para hacer pruebas */
+    }
+    else if (strcmp(args[0], "pwd") == 0)
+    {
+        char cwd[PATH_MAX];
+        if (getcwd(cwd, sizeof(cwd)) != NULL)
+        {
+            printf("%s\n", cwd);
+        }
+        else
+        {
+            perror("pwd");
+        }
+        return (0);
+    }
+    return (1);
 }
 

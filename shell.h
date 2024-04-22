@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h> /* used in find_in_path */
+#include <limits.h>
+
 
 #define MAX_ARGS 10
 
@@ -15,10 +17,17 @@
 
 extern char **environ; /* eviron global, for path */
 
+int process_command(const char *program_name, char **cmd_buffer,
+		size_t *buf_size);
+void clean_exit(char *cmd_buffer, int status);
+
+
 /*  Function prototypes */
 void display_prompt(void);
 char **parse_input(char *input);
-int execute_command(char **args);
+
+int execute_command(char **args, const char *program_name);
+
 void free_args(char **args);
 /**
  * find_in_path - Searches the system's PATH to find an executable file.
@@ -38,10 +47,12 @@ char *find_in_path(char *cmd);
 int handle_builtins(char **args);
 
 /* Execute external commands found in PATH */
-int execute_external(char **args);
+int execute_external(char **args, const char *program_name);
 
 /* Error handling function */
-void handle_error(const char *error_message, int error_code);
+void handle_error(const char *program_name, const char *error_message,
+		int error_code);
+
 
 #endif
 

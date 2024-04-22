@@ -1,41 +1,111 @@
 #include "shell.h"
 
-/**
- * main - Entry point of the shell program.
+/* main - Entry point of the shell program.
+ * Description: This is a simple shell program that
+ * handles commands from stdin.
  *
- * Description: This is a simple shell program
- *
- * Return: (0) on successful execution.
+ * Return: Returns (0) on successful execution,
+ * otherwise returns error code.
  */
-int main(void)
+int main(int argc, char **argv)
 {
-	/* Variables declaration */
 	char *cmd_buffer = NULL;
 	size_t buf_size = 0;
-	ssize_t line_size;
-	char **args;
+	int is_interactive, continue_running = 1;
+	/*added 4/21/24 */
 
-	/* Infinite loop to keep the shell running */
-	while (1)
+	/* Explicitly stating that argc is not used-for warning */
+	(void)argc;
+
+	is_interactive = isatty(STDIN_FILENO);
+
+    while (continue_running)
+    {
+        if (is_interactive)
 	{
-		display_prompt(); /* Display command prompt */
+            display_prompt();
+        }
 
-		/* Read line from stdin */
-		line_size = getline(&cmd_buffer, &buf_size, stdin);
+        continue_running = process_command(argv[0], &cmd_buffer, &buf_size);
+    }
 
-		/* Check for end of file (no input) */
-		if (line_size == -1)
-			break;
-
-		/* Parse the input string into commands and arguments */
-		args = parse_input(cmd_buffer);
-		if (args[0] != NULL)
-			execute_command(args); /* Execute the command if not NULL */
-
-		free_args(args); /* Free the memory allocated for arguments */
-	}
-
-	free(cmd_buffer); /* Free the buffer allocated for command input */
-	return (0); /* Return zero to indicate successful execution */
+    free(cmd_buffer);
+    return (0);
 }
 
+/* while (1)
+*    {
+*	if (is_interactive) // added new//
+*	{
+*            display_prompt();
+*       }
+
+	if (process_command(argv[0], &cmd_buffer, &buf_size) == 0)
+	{
+            break;
+	}
+    }
+
+    free(cmd_buffer);
+    return (0);
+} */
+
+
+/* process_command - Processes each command input by the user.
+ * @cmd_buffer: Pointer to the command buffer.
+ * @buf_size: Pointer to the buffer size variable.
+ * Description: Reads a line from stdin and processes it
+ * using various helper functions.
+ */
+int process_command(const char *program_name, char **cmd_buffer,
+		size_t *buf_size)
+{
+    ssize_t line_size;
+    char **args;
+    int result;
+
+    line_size = getline(cmd_buffer, buf_size, stdin);
+
+    if (line_size == -1)
+    {
+        clean_exit(*cmd_buffer, feof(stdin) ? 0 : 1);
+    }
+
+    args = parse_input(*cmd_buffer);
+    if (!args || !args[0])
+    {
+        free_args(args);
+        return (1); /* Continúa procesando sin ejecutar nada. */
+    }
+
+    result = execute_command(args, program_name);
+    free_args(args);
+
+    if (result == 1) 
+    {
+        /* Comando no encontrado, error ya impreso en `execute_external`*/
+        return (1);
+    }
+
+    return (0); /* Comando manejado correctamente. */
+}
+
+/* clean_exit - Handles the cleanup operations and exits the shell.
+ * @cmd_buffer: Pointer to the command buffer to free.
+ * @status: Exit status to return.
+ * Description: Frees the command buffer and exits the shell with
+ * the given status.
+ */
+void clean_exit(char *cmd_buffer, int status)
+{
+	if (status == 0)
+    {
+        printf("\n");
+    }
+    else
+    {
+        perror("Readline error");
+    }
+    free(cmd_buffer);
+    exit(status);
+}
