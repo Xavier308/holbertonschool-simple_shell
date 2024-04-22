@@ -15,6 +15,7 @@ int main(void)
 	char **args;
 
 	char *path_value = get_env_var("PATH");
+
 	if (path_value == NULL)
 	{ /* handle empty paths */
 	}
