@@ -45,7 +45,7 @@ char *find_in_path(char *cmd)
     char *path_copy, *dir, *full_path = NULL;
     struct stat st;
 
-    printf("Current PATH: %s\n", path);
+   /* printf("Current PATH: %s\n", path); */
     
     if (!path) 
 	{
@@ -66,7 +66,7 @@ char *find_in_path(char *cmd)
             return (NULL);
         }
         sprintf(full_path, "%s/%s", dir, cmd);
-	printf("Checking path: %s\n", full_path); /*  for depuration */
+	/* printf("Checking path: %s\n", full_path); //  for depuration */
         if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR)) {
            free(path_copy);
             return (full_path);

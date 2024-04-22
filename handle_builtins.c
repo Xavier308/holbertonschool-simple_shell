@@ -19,7 +19,7 @@ int handle_builtins(char **args)
     else if (strcmp(args[0], "exit") == 0)
     {
 	exit(0); /* Exit the shell when 'exit' is typed */
-        /* return (0);   // comentado para hacer pruebas */
+        /* return (0);   // not needed */
     }
     else if (strcmp(args[0], "pwd") == 0)
     {

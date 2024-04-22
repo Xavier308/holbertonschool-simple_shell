@@ -51,7 +51,7 @@ int execute_external(char **args, const char *program_name)
     if (pid == 0)
     {
         /* Child process */
-	printf("Executing command: %s\n", cmd_path); /* ---for depuration--- */
+	/* printf("Executing command: %s\n", cmd_path);  ---for depuration--- */
         execvp(cmd_path, args);
         fprintf(stderr, "%s: failed to execute - %s\n", cmd_path, strerror(errno));
         exit(EXIT_FAILURE);
@@ -69,7 +69,7 @@ int execute_external(char **args, const char *program_name)
         if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
 	{
             fprintf(stderr, "Command exited with status %d\n", WEXITSTATUS(status));
-	    free(cmd_path); /* added recently  */
+	    free(cmd_path);
 	    return  (2); /* changed from 2 to 3 */
         }
     }

@@ -11,15 +11,15 @@ int main(int argc, char **argv)
 {
 	char *cmd_buffer = NULL;
 	size_t buf_size = 0;
-	int is_interactive, continue_running = 1;
-	/*added 4/21/24 */
+	int is_interactive; 
+	/* int continue_running = 1; */
 
 	/* Explicitly stating that argc is not used-for warning */
 	(void)argc;
 
 	is_interactive = isatty(STDIN_FILENO);
 
-    while (continue_running)
+ /*   while (continue_running)
     {
         if (is_interactive)
 	{
@@ -32,24 +32,24 @@ int main(int argc, char **argv)
     free(cmd_buffer);
     return (0);
 }
+*/
 
-/* while (1)
-*    {
-*	if (is_interactive) // added new//
-*	{
-*            display_prompt();
-*       }
-
-	if (process_command(argv[0], &cmd_buffer, &buf_size) == 0)
+	while (1)
 	{
-            break;
+		if (is_interactive) /* added new */
+		{
+            		display_prompt();
+		}
+
+		if (process_command(argv[0], &cmd_buffer, &buf_size) == 0)
+		{
+			break;
+		}
 	}
-    }
 
-    free(cmd_buffer);
-    return (0);
-} */
-
+	free(cmd_buffer);
+	return (0);
+}
 
 /* process_command - Processes each command input by the user.
  * @cmd_buffer: Pointer to the command buffer.
@@ -68,27 +68,34 @@ int process_command(const char *program_name, char **cmd_buffer,
 
     if (line_size == -1)
     {
-        clean_exit(*cmd_buffer, feof(stdin) ? 0 : 1);
+      /*  return (0); */
+	 clean_exit(*cmd_buffer, feof(stdin) ? 0 : 1); /* (block if cause problem) */
     }
 
     args = parse_input(*cmd_buffer);
     if (!args || !args[0])
     {
         free_args(args);
-        return (1); /* Continúa procesando sin ejecutar nada. */
+        return (1); /* continue */
     }
 
     result = execute_command(args, program_name);
     free_args(args);
 
-    if (result == 1) 
+    return result == 1 ? 0 : 1; 
+    /* if the command was execute correctly, continue */
+}
+
+ /*   if (result == 1) // **this snippet is causing problems***  
     {
-        /* Comando no encontrado, error ya impreso en `execute_external`*/
+        // it exit the program on each command/
         return (1);
     }
 
-    return (0); /* Comando manejado correctamente. */
-}
+    return (0);
+} */
+
+
 
 /* clean_exit - Handles the cleanup operations and exits the shell.
  * @cmd_buffer: Pointer to the command buffer to free.
