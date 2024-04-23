@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 		{
 			display_prompt();
 		}
-
+		/* if changed for else */
 		if (process_command(argv[0], &cmd_buffer, &buf_size) == 0)
 		{
 			break;
@@ -79,6 +79,42 @@ int process_command(const char *program_name, char **cmd_buffer,
 
 	return (result == 1 ? 0 : 1);
 }
+
+/*	while ((line_size = getline(cmd_buffer, buf_size, stdin)) != -1)
+	{
+        	args = parse_input(*cmd_buffer);
+
+		if (args && args[0])
+		{
+            	result = execute_command(args, program_name);
+            	free_args(args);
+
+            		if (result != 0)
+	   	 	{	  
+    		    	return (1);
+		 	}
+        	}
+		else
+		{
+            		free_args(args);
+        	}
+   	 }
+
+    	if (feof(stdin))
+	{
+        	return (0);
+   	 }
+	else
+	{
+        	perror("Error leyendo la entrada");
+        	return (1);
+    	}
+}
+*/
+
+
+
+
 
 /**
  * clean_exit - Handles the cleanup operations and exits the shell.
