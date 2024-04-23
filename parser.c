@@ -12,24 +12,25 @@
  * Return: An array of strings, where each string is one part
  * of the parsed input.
  */
-char **parse_input(char *input) 
+char **parse_input(char *input)
 {
-    int i = 0;
-    char **args = malloc(MAX_ARGS * sizeof(char *));
-    char *token;
+	int i = 0;
+	char **args = malloc(MAX_ARGS * sizeof(char *));
+	char *token;
 
-    if (args == NULL)
-    {
-        fprintf(stderr, "Error: Memory allocation failed\n");
-        return (NULL);
-    }
+	if (args == NULL)
+	{
+		fprintf(stderr, "Error: Memory allocation failed\n");
+		return (NULL);
+	}
 
-    token = strtok(input, " \n\t");
-    while (token != NULL && i < MAX_ARGS - 1) {
-        args[i++] = strdup(token); /* Duplicate token to manage memory independently */
-        token = strtok(NULL, " \n\t");
-    }
-    args[i] = NULL; /*  NULL termination */
-
-    return (args);
+	token = strtok(input, " \n\t");
+	while (token != NULL && i < MAX_ARGS - 1)
+	{
+		/* Duplicate token to manage memory independently */
+		args[i++] = strdup(token);
+		token = strtok(NULL, " \n\t");
+	}
+	args[i] = NULL; /* NULL termination */
+	return (args);
 }

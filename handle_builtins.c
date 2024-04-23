@@ -11,29 +11,28 @@
  */
 int handle_builtins(char **args)
 {
-    if (strcmp(args[0], "cd") == 0)
-    {
+	if (strcmp(args[0], "cd") == 0)
+	{
+		return (0);
+	}
+	else if (strcmp(args[0], "exit") == 0)
+	{
+		exit(0); /* Exit the shell when 'exit' is typed */
+	}
+	else if (strcmp(args[0], "pwd") == 0)
+	{
+		char cwd[PATH_MAX];
 
-        return (0);
-    }
-    else if (strcmp(args[0], "exit") == 0)
-    {
-	exit(0); /* Exit the shell when 'exit' is typed */
-        /* return (0);   // not needed */
-    }
-    else if (strcmp(args[0], "pwd") == 0)
-    {
-        char cwd[PATH_MAX];
-        if (getcwd(cwd, sizeof(cwd)) != NULL)
-        {
-            printf("%s\n", cwd);
-        }
-        else
-        {
-            perror("pwd");
-        }
-        return (0);
-    }
-    return (1);
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			printf("%s\n", cwd);
+		}
+		else
+		{
+			perror("pwd");
+		}
+		return (0);
+		}
+	return (1);
 }
 
