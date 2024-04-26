@@ -16,13 +16,11 @@ int main(void)
 
 	char *path_value = get_env_var("PATH");
 
-	if (path_value == NULL || strlen(path_value) == 0)
+	if (path_value == NULL || *path_value == '\0')
 	{
-		/* Execute ls directly if PATH is empty */
-		char *ls_command[2];
+		/* Execute bin/ls directly if PATH is empty */
+		char *ls_command[] = {"/bin/ls", NULL};
 
-		ls_command[0] = "ls";
-		ls_command[1] = NULL;
 		execute_external(ls_command);
 		return (0);
 	}
