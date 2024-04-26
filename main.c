@@ -16,8 +16,10 @@ int main(void)
 
 	char *path_value = get_env_var("PATH");
 
-	if (path_value == NULL)
-	{ /* handle empty paths */
+	if (path_value == NULL || strlen(path_value) == 0)
+	{
+		/* Set default PATH*/
+		setenv("PATH", "/bin:/usr/bin", 1);
 	}
 	/* Infinite loop to keep the shell running */
 	while (1)
