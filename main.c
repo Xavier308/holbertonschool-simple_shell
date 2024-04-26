@@ -18,10 +18,13 @@ int main(void)
 
 	if (path_value == NULL || strlen(path_value) == 0)
 	{
-		/* Set default PATH*/
-		char *default_path = "/bin:/usr/bin";
+		/* Execute ls directly if PATH is empty */
+		char *ls_command[2];
 
-		putenv(strdup(default_path));
+		ls_command[0] = "ls";
+		ls_command[1] = NULL;
+		execute_external(ls_command);
+		return (0);
 	}
 	/* Infinite loop to keep the shell running */
 	while (1)
