@@ -19,7 +19,9 @@ int main(void)
 	if (path_value == NULL || strlen(path_value) == 0)
 	{
 		/* Set default PATH*/
-		setenv("PATH", "/bin:/usr/bin", 1);
+		char *default_path = "/bin:/usr/bin";
+
+		putenv(strdup(default_path));
 	}
 	/* Infinite loop to keep the shell running */
 	while (1)
