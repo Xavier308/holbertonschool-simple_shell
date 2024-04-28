@@ -1,29 +1,79 @@
-.TH C-SIMPLE SHELL 1 simple_shell\-0.1
+.TH C-SIMPLE SHELL 1 "April 2024"
 .SH NAME
-C-SIMPLE SHELL - A simple shell program
-.SH LIBRARY
-Standard C library
+C-SIMPLE SHELL \- a minimalistic shell for command execution.
+
 .SH SYNOPSIS
-C-SIMPLE SHELL
-#include <"shell.h">
-.P
-int display_prompt(void);
+.B c-simple-shell
+.RI [ options ] [ command ]
+
 .SH DESCRIPTION
-C-SIMPLE SHELL
-- is a basic command-line interpreter that allows users to interact with the operating system by entering commands
-.SH RETURN VALUE
-It executes the corresponding program or operation that you give the command line in your operator
-.SH AUTHOR(S)
-This code was mostly written in collaboration by
-.I Xavier J. Cruz Santiago
-.B &
-.I Angel Velazquez
-.R for a project called C-SIMPLE SHELL
-.SH Bugs
-If encountering any issues, I recommend making your own program instead. Do some research. Do some more research. Maybe ask some peers. Or call Xavier.
+C-SIMPLE SHELL is a simple UNIX command interpreter that reads commands from the standard input or from a file and executes them.
+
+This shell supports executing both built-in commands and external programs. It handles errors gracefully and can be extended with additional features easily.
+
+.SH OPTIONS
+This shell does not support any command-line options at the current version.
+
+.SH USAGE
+Start the shell by typing:
+.RS
+c-simple-shell
+.RE
+
+Once started, the shell prompt appears as:
+.RS
+#supershell$
+.RE
+
+You can then type commands directly into the shell.
+
+.SH BUILT-IN COMMANDS
+The shell supports the following built-in commands:
+
+.TP
+.B cd [directory]
+Changes the current directory to
+.I directory
+. If no directory is provided, it changes to the home directory.
+
+.TP
+.B exit
+Exits the shell.
+
+.SH EXTERNAL COMMANDS
+The shell can execute any external commands available in the system PATH.
+
+.SH ENVIRONMENT
+The shell uses the
+.B PATH
+environment variable to resolve commands. If
+.B PATH
+is not set, it defaults to executing
+.I "/bin/ls"
+.
+
+.SH RETURN VALUES
+This shell returns
+.I 0
+upon successful command execution and
+.I 1
+if an error occurs.
+
+.SH FILES
+.I /bin/*
+.br
+Standard location for executable files which the shell can execute.
+
+.SH AUTHOR
+Written by Xavier J. Cruz Santiago and Angel Velazquez.
+
+.SH BUGS
+Currently, there are no known bugs. However, error handling is basic, and complex command parsing might not be supported.
+
+.SH SEE ALSO
+.B sh(1),
+.B bash(1)
+
 .SH COPYRIGHT
-Copyright \(co 2024 [
-.I HOLBERTON C SCHOOL
-.R ]
-.SH NOTES
-.B  This man page was completed for proper documentation of a function. It was created as part of a project for Holberton School. It is not intended for practical use.
+Copyright \(co 2024 by HOLBERTON SCHOOL. This is open-source software; feel free to modify and redistribute it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+

@@ -32,7 +32,7 @@ By the end of this project, we should be able to explain:
 Clone the repository:
 
 ```shell
-git@github.com:Xavier308/holbertonschool-simple_shell.git
+git clone git@github.com:Xavier308/holbertonschool-simple_shell.git
 ```
 Compile with:
 
@@ -65,6 +65,8 @@ hsh main.c shell.c
 ($) exit
 $
 ```
+## Contributions
+We welcome contributions from fellow students and educators.
 
 ## Bugs
 
