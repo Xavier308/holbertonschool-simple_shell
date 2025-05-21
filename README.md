@@ -68,10 +68,6 @@ $
 ## Contributions
 We welcome contributions from fellow students and educators.
 
-## Bugs
-
-This shell implementation is a learning exercise and may have bugs. It is not intended for full practical use.
-
 ## Acknowledgments
 
 - Julien Barbier
